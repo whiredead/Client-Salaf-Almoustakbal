@@ -1,0 +1,56 @@
+<body>
+  <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-column align-items-center justify-content-center">
+        <img src="assets/layout/images/logo.png" alt="SM logo" class="mb-5 w-6rem flex-shrink-0">                
+        <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(28, 227, 88, 0) 30%);">
+            <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+                <div class="text-center mb-5">
+                    <img src="assets/layout/images/profil.jpg" alt="Image" height="80" class="mb-3">
+                    <h2>Bonjour, Veuillez vous connecter.</h2>
+                </div>
+                  <form class="login-form"  [formGroup] ="loginForm">
+                    <div class="form-group">
+                      <label for="username">Email:</label>
+                      <input type="text" id="username" formControlName="email" class="form-control"
+                      [class.is-invalid]="submitted && loginForm.get('email')?.errors ">
+                      <span class="text-danger" *ngIf="submitted &&  loginForm.get('email')?.hasError('required')">
+                        Le champ email est obligatoire 
+                      </span>
+                      <span class="text-danger" *ngIf="submitted &&  loginForm.get('email')?.hasError('pattern')">
+                        Le champ email est invalide 
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Mot de passe:</label>
+                      <input type="password" id="password" formControlName="password" class="form-control"
+                      [class.is-invalid]="submitted && loginForm.get('password')?.errors ">
+                      <span class="text-danger" *ngIf="submitted &&  loginForm.get('password')?.hasError('required')">
+                        Le champ mot de passe est obligatoire 
+                      </span>
+                    </div>
+                    <div>
+                      <ul *ngIf="errorMessages.length>0" >
+                        <li class="alert alert-danger">
+                          <span>{{ errorMessages }}</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="form-group">
+                      <button (click)="login()">Se connecter</button>
+                    </div>
+                    <!-- <div class="form-group">
+                      <a href="#" class="register-link">Create an account</a>
+                    </div> -->
+                  </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+  
+  
+    <!--<div class="container">
+      <div class="table-loading-shade" *ngIf="isProcessing">
+        <mat-spinner *ngIf="isProcessing">
+        </mat-spinner>
+    </div>-->

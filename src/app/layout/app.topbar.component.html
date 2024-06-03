@@ -1,0 +1,43 @@
+<div class="layout-topbar">
+
+    <a class="layout-topbar-logo" [routerLink]="'/salaf'">
+        <img src="assets/layout/images/logo.png" alt="logo">
+    </a>
+
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" *ngIf="(authService.user$ | async) as user" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        
+        <div *ngIf="(authService.user$ | async) as user">
+
+            <button [matMenuTriggerFor]="menu" class="p-link layout-topbar-button">
+                <p-avatar styleClass="mr-1" *ngIf="user.profilePicture" image={{user.profilePicture}} size="xlarge" shape="circle" />
+                <p-avatar styleClass="mr-1" *ngIf="!user.profilePicture" image="assets/layout/images/profil.jpg" size="xlarge" shape="circle" />
+                <span>{{user.firstName}}</span>
+            </button>
+            <mat-menu #menu="matMenu" >
+                <button mat-menu-item >
+                    <span>mon profil</span>
+                </button>
+                <button mat-menu-item (click)="authService.logout()">
+                    <span>déconnecter</span>
+                </button>
+            </mat-menu>
+        </div>
+
+        <div *ngIf="!(authService.user$ | async)">
+            <button mat-flat-button style="color: green;background-color: bisque;" [routerLink]="'/connecter'">
+                <i class="pi pi-sign-in"></i> 
+                <span> connecter</span>
+            </button>
+        </div>
+        
+    </div>
+
+</div>
