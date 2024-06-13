@@ -4,6 +4,7 @@ import { Message, MessageService, SelectItem } from 'primeng/api';
 import { lastValueFrom } from 'rxjs';
 import { ClientService } from 'src/app/demo/service/client.service';
 import { DossierService } from 'src/app/demo/service/dossier.service';
+import { SelectedItem } from 'src/app/shared/models/SelectedItem';
 import { agence } from 'src/app/shared/models/agence';
 import { civilite } from 'src/app/shared/models/civilite';
 import { periodicite } from 'src/app/shared/models/periodicite';
@@ -20,11 +21,11 @@ export class CreationComponent implements OnInit {
   submitted: boolean = false;
   errorMessages: string[] = [];
   creationForm: FormGroup;
-  clientsBox: SelectItem[] = [];
-  produitBox: SelectItem[] = [];
-  agenceBoxe: SelectItem[]=[];
+  clientsBox: SelectedItem[] = [];
+  produitBox: SelectedItem[] = [];
+  agenceBoxe: SelectedItem[]=[];
   uploadedFiles: any[] = [];
-  periodiciteBox: SelectItem[]=[];
+  periodiciteBox: SelectedItem[]=[];
 
   constructor(private messageService: MessageService, public clientSer: ClientService, public dossierSer: DossierService) {
     this.creationForm = new FormGroup({
@@ -48,13 +49,13 @@ export class CreationComponent implements OnInit {
     });
   }
 
-  getProduit(): SelectItem[] {
+  getProduit(): SelectedItem[] {
     return Object.keys(produit)
       .filter(key => isNaN(Number(key)))  // Filter out the reverse mapping
       .map(key => ({ label: key }));
   }
 
-  getAgence(): SelectItem[] {
+  getAgence(): SelectedItem[] {
     return Object.keys(agence)
       .filter(key => isNaN(Number(key)))  // Filter out the reverse mapping
       .map(key => ({ label: key }));
@@ -74,7 +75,7 @@ export class CreationComponent implements OnInit {
     
   }
 
-  async getAllClients(): Promise<SelectItem[]> {
+  async getAllClients(): Promise<SelectedItem[]> {
     try {
       const data = await lastValueFrom(this.clientSer.getAllClients());
 

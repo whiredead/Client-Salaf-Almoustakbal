@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { ElementRef, Injectable, ViewChild } from '@angular/core';
 import {lastValueFrom } from 'rxjs';
-import { MenuItem } from 'primeng/api';
+//import { MenuItem } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { BarDto } from 'src/app/shared/models/BarDto';
 import { MenuDto } from 'src/app/shared/models/MenuDto';
+import { MenuItems } from 'src/app/shared/models/MenuItems';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemBarService {
 
-  menuItem: MenuItem[] | undefined=[];
+  menuItem: MenuItems[] | undefined=[];
 
   public sidebarVisible: boolean = true;
 
@@ -33,7 +34,7 @@ export class ItemBarService {
     for (const bar of barDto) {
         const observable = this.getMenuByid(bar.id);
         const response: BarDto = await lastValueFrom(observable);
-        let newItem: MenuItem | undefined;
+        let newItem: MenuItems | undefined;
         console.log('#### response '+JSON.stringify(response,null,2))
         if(response.hasChild){
           newItem = {
@@ -56,10 +57,10 @@ export class ItemBarService {
 
   }
 
-  async getsubMenuItems(response: BarDto): Promise<MenuItem[]> {
-    const subMenuItems: MenuItem[] = [];
+  async getsubMenuItems(response: BarDto): Promise<MenuItems[]> {
+    const subMenuItems: MenuItems[] = [];
     for (const menu of response.menusDto) {
-      let newItem: MenuItem | undefined;
+      let newItem: MenuItems | undefined;
       
       if (menu.hasChild && menu.parentId === 0) {
         let url='/salaf/'+response.title+'/'
@@ -84,13 +85,13 @@ export class ItemBarService {
     return subMenuItems;
   }
   
-  private async getSubMenuItemsSubItems(parent: MenuDto, menus:BarDto,url:string): Promise<MenuItem[]> {
-    const SubMenuItemsSubItems: MenuItem[] = [];
+  private async getSubMenuItemsSubItems(parent: MenuDto, menus:BarDto,url:string): Promise<MenuItems[]> {
+    const SubMenuItemsSubItems: MenuItems[] = [];
     url+=parent.name+'/'
     console.log('#### '+ url)
     for (const menu of menus.menusDto) {
       if (menu.parentId === parent.id) {
-        const subMenuItem: MenuItem = {
+        const subMenuItem: MenuItems = {
           label: menu.name,
         };
 
@@ -111,7 +112,7 @@ export class ItemBarService {
     return SubMenuItemsSubItems;
   }
   
-async getAllmenu(): Promise<MenuItem> {
+async getAllmenu(): Promise<MenuItems> {
     await this.getMenusItem();
     return this.menuItem;
 }

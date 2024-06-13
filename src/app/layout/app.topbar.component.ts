@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+//import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
 import { AuthService } from '../demo/service/auth.service';
+import { MenuItems } from '../shared/models/MenuItems';
 
 @Component({
     selector: 'app-topbar',
@@ -9,7 +10,7 @@ import { AuthService } from '../demo/service/auth.service';
 })
 export class AppTopBarComponent {
 
-    items!: MenuItem[];
+    items!: MenuItems[];
 
     @ViewChild('menubutton') menuButton!: ElementRef;
 

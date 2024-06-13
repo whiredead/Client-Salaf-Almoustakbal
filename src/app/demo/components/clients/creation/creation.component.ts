@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Message, MessageService, SelectItem } from 'primeng/api';
 import { lastValueFrom } from 'rxjs';
 import { ClientService } from 'src/app/demo/service/client.service';
+import { SelectedItem } from 'src/app/shared/models/SelectedItem';
 import { sitFamiliale } from 'src/app/shared/models/SitFamiliale';
 import { civilite } from 'src/app/shared/models/civilite';
 import { statutOccupationLogement } from 'src/app/shared/models/statutOccupationLogement';
@@ -25,27 +26,27 @@ export class CreationComponent implements OnInit {
   creationForm: FormGroup;
   submitted: boolean = false;
   errorMessages: string[]= []
-  civiliteBox: SelectItem[] = [];
-  sitFamilialeBox: SelectItem[] = [];
-  villeBox: SelectItem[] = [];
-  villeBox1: SelectItem[] = [];
-  statusLogBox: SelectItem[]=[];
+  civiliteBox: SelectedItem[] = [];
+  sitFamilialeBox: SelectedItem[] = [];
+  villeBox: SelectedItem[] = [];
+  villeBox1: SelectedItem[] = [];
+  statusLogBox: SelectedItem[]=[];
 
   constructor(private clientService:ClientService,private route: ActivatedRoute, private messageservice: MessageService,public clientSer: ClientService) {
   }
 
-  getCivilite(): SelectItem[] {
+  getCivilite(): SelectedItem[] {
     return Object.keys(civilite)
       .filter(key => isNaN(Number(key)))  // Filter out the reverse mapping
       .map(key => ( {label: key} ));
   }
 
-  getVille(): SelectItem[] {
+  getVille(): SelectedItem[] {
     return Object.keys(Ville)
       .map(key => ( { label: Ville[key] } ));
   }
 
-  async getAllVilles(): Promise<SelectItem[]> {
+  async getAllVilles(): Promise<SelectedItem[]> {
     try {
       const data = await lastValueFrom(this.clientSer.getAllVilles());
       const villes = data.map(d => ({ label: d.name, codeVille: d.id }));
@@ -55,13 +56,13 @@ export class CreationComponent implements OnInit {
       return [];
     }
   }
-  getSitFamiliale(): SelectItem[] {
+  getSitFamiliale(): SelectedItem[] {
     return Object.keys(sitFamiliale)
       .filter(key => isNaN(Number(key)))  // Filter out the reverse mapping
       .map(key => ( {label: key} ));
   }
 
-  getStatutOccupationLogement(): SelectItem[] {
+  getStatutOccupationLogement(): SelectedItem[] {
     return Object.keys(statutOccupationLogement)
       .map(key => ( { label: statutOccupationLogement[key] } ));
   }

@@ -12,7 +12,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 
 import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
 
 
 @NgModule({
@@ -27,7 +26,6 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     MatButtonModule,
     MatIconModule,
     InputTextModule,
-    FloatLabelModule
   ]
 })
 export class ConsulterModule { }
