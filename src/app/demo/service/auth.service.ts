@@ -27,7 +27,7 @@ export class AuthService {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', 'Bearer '+ jwt);
     //console.log(headers)
-    return this.http.get<User>(`${environment.appUrl}/refresh-user-token`, {headers}).pipe(
+    return this.http.get<User>(`${environment.appUrl}auth/refresh-user-token`, {headers}).pipe(
       map((user:User)=>{
         if(user){
           this.setUser(user);
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   login(model: login): Observable<User> {
-    return this.http.post<User>(`${environment.appUrl}/login`,model)
+    return this.http.post<User>(`${environment.appUrl}auth/login`,model)
     .pipe(
       map((user: User) => {
         if (user) {
@@ -58,7 +58,7 @@ export class AuthService {
   }
  
   inscrire(formData: FormData): Observable<any>  {
-    return this.http.post<any>(`${environment.appUrl}/register`,formData)
+    return this.http.post<any>(`${environment.appUrl}auth/register`,formData)
   }
 
   getJwt(){

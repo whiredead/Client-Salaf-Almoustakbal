@@ -11,8 +11,11 @@
                   <form class="login-form"  [formGroup] ="loginForm">
                     <div class="form-group">
                       <label for="username">Email:</label>
-                      <input type="text" id="username" formControlName="email" class="form-control"
+
+                      <input type="text" id="username" formControlName="email" class="form-control"   
                       [class.is-invalid]="submitted && loginForm.get('email')?.errors ">
+
+                      
                       <span class="text-danger" *ngIf="submitted &&  loginForm.get('email')?.hasError('required')">
                         Le champ email est obligatoire 
                       </span>
@@ -20,24 +23,34 @@
                         Le champ email est invalide 
                       </span>
                     </div>
-                    <div class="form-group">
+                    
+                    <div class="form-group ">
                       <label for="password">Mot de passe:</label>
+
+                      <!--<p-password  [toggleMask]="true" [feedback]="false" [ngClass]="{'ng-dirty ng-invalid': submitted && loginForm.get('password')?.errors}"></p-password>-->
+
                       <input type="password" id="password" formControlName="password" class="form-control"
-                      [class.is-invalid]="submitted && loginForm.get('password')?.errors ">
+                      [class.is-invalid]="submitted && loginForm.get('password')?.errors  ">
+                      
                       <span class="text-danger" *ngIf="submitted &&  loginForm.get('password')?.hasError('required')">
                         Le champ mot de passe est obligatoire 
                       </span>
+                      
                     </div>
-                    <div>
-                      <ul *ngIf="errorMessages.length>0" >
-                        <li class="alert alert-danger">
-                          <span>{{ errorMessages }}</span>
-                        </li>
-                      </ul>
+                    <div *ngIf="errorMessages.length>0" class="alert alert-danger mb-2">
+                      <span >{{ errorMessages }}</span>
                     </div>
                     <div class="form-group">
                       <button (click)="login()">Se connecter</button>
                     </div>
+                    <div >
+                      <p-progressSpinner class="flex justify-content-center" *ngIf="progress && submitted"
+                      styleClass="w-3rem h-3rem" 
+                      strokeWidth="3" 
+                      fill="var(--surface-ground)" 
+                      animationDuration="1s"   />
+                    </div>
+                    
                     <!-- <div class="form-group">
                       <a href="#" class="register-link">Create an account</a>
                     </div> -->

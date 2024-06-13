@@ -36,9 +36,10 @@ export class CreationComponent implements OnInit{
     }
   );}
 
-  showSuccessViaToast() {
-    console.log("#### showSuccessViaToast called")
-    this.messageservice.add({ key: 'tst', severity: 'success', summary: 'Success Message', detail: 'Utilisateur creer avec succes' });
+  showToast(severity:string,summary:string,detail:string) {
+    console.log('### calleddd')
+    this.messageservice.add({ key: 'tst', severity: severity, summary: summary, detail: detail });
+
   }
 
   ngOnInit(): void {
@@ -73,36 +74,22 @@ export class CreationComponent implements OnInit{
 
       this.authService.inscrire(formData).subscribe({
         next: (response: any) => {
-          console.log("######## response"+ response);
-          this.showSuccessViaToast()
+          this.showToast('success','Message succes','utilasateur est creé avec succes')
           this.inscriptionForm.reset();
           this.submitted = false;
         },
         error: (error: any) => {
           this.errorMessages=error.error.value.message;
+          this.showToast('error','Message echec',error.error.value?.message)
+          console.log('#### ' +JSON.stringify(this.errorMessages))
+
           console.log(error)
         }
       });
     }
-    else{
-      if(this.inscriptionForm.errors?.['passwordMatchError']){
-        console.log("mot de passe incorrete")
-      }
-      console.log("### nom" +this.inscriptionForm.get('nom')?.status);    
-      console.log("### prenom" +this.inscriptionForm.get('prenom')?.status);
-      console.log("### email" +this.inscriptionForm.get('email')?.status)
-      console.log("### DateNaissance" +this.inscriptionForm.get('DateNaissance')?.status)
-      console.log("### cin" +this.inscriptionForm.get('cin')?.status)
-      console.log("### profile" +this.inscriptionForm.get('profile')?.status)
-      console.log("### profession" +this.inscriptionForm.get('profession')?.status)
-      console.log("### adresse" +this.inscriptionForm.get('adresse')?.status)
-      console.log("### password" +this.inscriptionForm.get('password')?.status)
-      console.log("### passwordConf" +this.inscriptionForm.get('passwordConf')?.status)
-      console.log("### genre" +this.inscriptionForm.get('genre')?.status)
-    }
   }
 
-
+  
   matchpassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const pwd = control.get('password');
     const pwdC = control.get('passwordConf');
@@ -110,6 +97,10 @@ export class CreationComponent implements OnInit{
       return { passwordmatcherror: true }; // Return an error if passwords don't match
     }
     return null; // Return null if passwords match
+  }
+
+  reset(){
+    this.inscriptionForm.reset()
   }
 
 }

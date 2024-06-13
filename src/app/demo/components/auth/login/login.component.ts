@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit{
   submitted: boolean = false;
   errorMessages: string[]=[];
   returnUrl:string|null=null
+  progress:boolean=false;
 
   constructor(private formBuilder: FormBuilder, 
     private authService: AuthService,
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit{
     console.log('clicked');
     this.errorMessages = [];
     if (this.loginForm.valid) {
+      this.progress=true
       console.log('form valid');
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: User) => {
@@ -71,8 +73,19 @@ export class LoginComponent implements OnInit{
         error: (error: any) => {
           console.log(error);
           this.errorMessages = error.error.value.message;
+          this.progress=false
+
         },
+        complete:()=>{
+          this.progress=false
+        }
       });
     }
+  }
+
+  hide = true;
+  clickEvent(event: MouseEvent) {
+    this.hide = !this.hide;
+    event.stopPropagation();
   }
 }

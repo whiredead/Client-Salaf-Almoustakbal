@@ -16,6 +16,7 @@
   .grid  form .user-details{
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
     justify-content: space-between;
     margin: 10px 10px 0px 10px;
   }
@@ -40,11 +41,16 @@
       font-weight: 800;
       margin-bottom: 5px;
       color: #be1701b8;
-    }
+  }
+  
+  .panel-shadow{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+  }
+
   input[type="file"] {
       padding-top: 2%;
-  
-    }
+  }
   
   .user-details .input-box input{
     height: 45px;
@@ -61,25 +67,26 @@
   .user-details .input-box input:valid{
     border-color: #60B238;
   }
-   form .gender-details .gender-title{
+
+  form .gender-details .gender-title{
     font-size: 20px;
     font-weight: 500;
     margin-left: 10px;
-   }
-   form .category{
-     display: flex;
-     width: 50%;
-     margin: 20px 0 ;
-     justify-content: space-between;
-     margin-left: 10px;
-  
-   }
-   form .category label{
-     display: flex;
-     align-items: center;
-     cursor: pointer;
-   }
-   form .category label .dot{
+  }
+  form .category{
+    display: flex;
+    width: 50%;
+    margin: 20px 0 ;
+    justify-content: space-between;
+    margin-left: 10px;
+ 
+  }
+  form .category label{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  form .category label .dot{
     height: 18px;
     width: 18px;
     border-radius: 50%;
@@ -93,39 +100,40 @@
    #dot-3:checked ~ .category label .three{
      background: #60B238;
      border-color: #d9d9d9;
-   }
-   form input[type="radio"]{
-     display: none;
-   }
-   form .button{
-     height: 45px;
-     margin: 35px 0
-   }
-   form .button {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Ensure the container takes the full height of its parent */
   }
-   form .button input{
-     height: 100%;
-     width: 70%;
-     border-radius: 5px;
-     border: none;
-     color: #fff;
-     font-size: 18px;
-     font-weight: 500;
-     letter-spacing: 1px;
-     cursor: pointer;
-     transition: all 0.3s ease;
-     background: linear-gradient(135deg, #49b513, #71b350);
+  form input[type="radio"]{
+    display: none;
+  }
+  form .button{
+    display: flex;
+    justify-content: flex-end;
+    margin-left:10%;
+    height: 45px;
+    margin: 35px 0;
+
+    
+
+  }
+  form .button input{
+    height: 100%;
+    width: 10%;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #49b513, #71b350);
+  }
+  form .button input:hover{
+   /* transform: scale(0.99); */
+   background: linear-gradient(-135deg, #ba6a5f, #af2311);
    }
-   form .button input:hover{
-    /* transform: scale(0.99); */
-    background: linear-gradient(-135deg, #ba6a5f, #af2311);
-    }
    @media(max-width: 584px){
-   .grid{
-    max-width: 100%;
+    .grid{
+     max-width: 100%;
   }
   form .user-details .input-box{
       margin-bottom: 15px;

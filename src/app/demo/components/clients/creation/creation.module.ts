@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 		ToastModule,
     DropdownModule,
     InputNumberModule,
-    InputTextareaModule
+    InputTextareaModule,
+    FormsModule
   ]
 })
 export class CreationModule { }

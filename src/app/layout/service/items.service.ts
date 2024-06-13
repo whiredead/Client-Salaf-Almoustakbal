@@ -20,11 +20,11 @@ export class ItemBarService {
   
 
   getMenus() {
-    return this.http.get<BarDto[]>(`${environment.appUrl}/get-bars`);
+    return this.http.get<BarDto[]>(`${environment.appUrl}app/get-bars`);
   }
 
   getMenuByid(id:number) {
-    return this.http.get<BarDto>(`${environment.appUrl}/get-bar/${id}`);
+    return this.http.get<BarDto>(`${environment.appUrl}app/get-bar/${id}`);
   }
 
   async getMenusItem(){

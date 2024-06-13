@@ -8,6 +8,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     RadioButtonModule,
     RippleModule,
     ButtonModule,
-    SidebarModule
+    SidebarModule,
+    PanelModule
   ],
   exports:[
     FormsModule,
@@ -33,7 +35,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     RadioButtonModule,
     RippleModule,
     ButtonModule,
-    SidebarModule
+    SidebarModule,
+    PanelModule
   ]
 })
 export class SharedModule { }

@@ -1,33 +1,199 @@
 <div class="grid">
-	<div class="col-12">
-		<div class="card">
-			<h1>Création du dossier</h1>
-			<form >	
-				<div class="p-fluid p-formgrid grid">
-					<div class="field col-12 md:col-4">
-						<label htmlFor="firstname2">Date op</label>
-						<input pInputText id="firstname2" type="text" />
-					</div>
-					<div class="field col-12 md:col-4">
-						<label htmlFor="lastname2">Lastname</label>
-						<input pInputText id="lastname2" type="text" />
-					</div>
-					<div class="field col-12 md:col-4">
-						<label htmlFor="address">Address</label>
-						<input pInputTextarea id="address" rows="4" />
-					</div>
-					<div class="field col-12 md:col-6">
-						<label htmlFor="city">City</label>
-						<input pInputText id="city" type="text" />
-					</div>
-					<div class="field col-12 md:col-3">
-					</div>
-					<div class="field col-12 md:col-3">
-						<label htmlFor="zip">Zip</label>
-						<input pInputText id="zip" type="text" />
-					</div>
+    <div class="flex flex-column md:flex-row gap-5">
+        <div class="flex-auto">
+            <div class="col-12 panel-shadow">
+				<div class="card">
+					<p-panel header="Creation Dossiers" [toggleable]="false" >
+						<div class="p-fluid p-formgrid grid">
+							<form [formGroup]="creationForm">
+								<div class="user-details">
+									<!-- Date Op -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Date Op</span>
+											<input type="date" placeholder="Entrer la date d'embauche" formControlName="dateOp">
+											<span class="text-danger" *ngIf="submitted && creationForm.get('dateOp')?.hasError('required')">
+												Le champ Date Op est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Client -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Client</span>
+											<p-dropdown [options]="clientsBox" optionLabel="label" [filter]="true" filterBy="codeClient" formControlName="codeClient" placeholder="choisir client"></p-dropdown>
+											<span class="text-danger" *ngIf="submitted && creationForm.get('codeClient')?.hasError('required')">
+												Le champ  Client est obligatoire
+											</span>
+										</div>
+									</div>
+									<!--Référence -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Référence</span>
+											<input type="text" formControlName="reference" placeholder="Entrer la Référence">
+											<span class="text-danger" *ngIf="submitted && creationForm.get('reference')?.hasError('required')">
+												Le champ reference est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Produit -->
+									<div class="field col-12 md:col-6">
+										<div class="input-box">
+											<span class="details">Produit</span>
+											<p-dropdown [options]="produitBox" formControlName="produit" placeholder="choisir produit"></p-dropdown>
+											<span class="text-danger" *ngIf="submitted && creationForm.get('produit')?.hasError('required')">
+												Le champ Produit est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Agence -->
+									<div class="field col-12 md:col-6">
+										<div class="input-box">
+											<span class="details">Agence</span>
+											<p-dropdown [options]="agenceBoxe" formControlName="agence" placeholder="choisir agence"></p-dropdown>
+											<span class="text-danger" *ngIf="submitted && creationForm.get('agence')?.hasError('required')">
+												Le champ Agence est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Date Premiére Echeance -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Premiére Echeance</span>
+											<input type="date" placeholder="Entrer la date de la Premiére Echeance" formControlName="premiereEcheance">
+											<span class="text-danger" *ngIf="submitted && creationForm.get('premiereEcheance')?.hasError('required')">
+												Le champ Premiére Echeance est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Date Derniére Echeance -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Derniére Echeance</span>
+											<input type="date" formControlName="derniereEcheance" placeholder="Entrer la date de la Derniére Echeance">
+											<span class="text-danger" *ngIf="submitted && creationForm.get('derniereEcheance')?.hasError('required')">
+												Le champ Derniére Echeance est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Echéance -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Echéance</span>
+											<input type="date" formControlName="echeance" placeholder="Entrer la date de la Derniére Echeance">
+											<span class="text-danger" *ngIf="submitted && creationForm.get('echeance')?.hasError('required')">
+												Le champ Echéance est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Credit -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Credit</span>
+											<p-inputNumber mode="currency" currency="MAD" placeholder="Entrer le credit" formControlName="credit"></p-inputNumber>
+											<span class="text-danger" *ngIf="submitted && creationForm.get('credit')?.hasError('required')">
+												Le champ Credit est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Périodicite -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Périodicite</span>
+											<p-dropdown [options]="periodiciteBox" formControlName="periodicite" placeholder="choisir la periodicite"></p-dropdown>
+											<span class="text-danger" *ngIf="submitted && creationForm.get('periodicite')?.hasError('required')">
+												Le champ Périodicite est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Durée -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Durée</span>
+											<p-inputNumber 
+												[showButtons]="true" 
+												buttonLayout="horizontal" 
+												spinnerMode="horizontal" 
+												inputId="horizontal"
+												incrementButtonIcon="pi pi-plus" 
+												decrementButtonIcon="pi pi-minus"
+												decrementButtonClass="p-button-secondary"
+												incrementButtonClass="p-button-secondary"   
+												[min]="0" [max]="100"
+												placeholder="Entrer la Durée [0-100]"
+												formControlName="duree"
+											/>
+											<span class="text-danger" *ngIf="submitted && creationForm.get('duree')?.hasError('required')">
+												Le champ Durée est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- TEG -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">TEG</span>
+											<p-dropdown [options]="" placeholder="choisir TEG" formControlName="teg"></p-dropdown>
+										</div>
+									</div>
+									<!-- TVA -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">TVA</span>
+											<p-dropdown [options]="" placeholder="choisir TVA" formControlName="tva"></p-dropdown>
+										</div>
+									</div>
+									
+									<!-- Differé -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Differé</span>
+											<input type="text" placeholder="Entrer la differé" formControlName="differé" >
+											<span class="text-danger" *ngIf="submitted && creationForm.get('differé')?.hasError('required')">
+												Le champ Differé est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Assurance -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Assurance</span>
+											<input type="text" placeholder="Entrer l'assurance" formControlName="assurance">
+											<span class="text-danger" *ngIf="submitted && creationForm.get('assurance')?.hasError('required')">
+												Le champ Assurance est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Code Comptable -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details" >Code Comptable</span>
+											<input type="text" placeholder="Entrer le Code Comptable" formControlName="codeComptable">
+											<span class="text-danger" *ngIf="submitted && creationForm.get('codeComptable')?.hasError('required')">
+												Le champ Code Comptable est obligatoire
+											</span>
+										</div>
+									</div>
+									<!-- Cession -->
+									<div class="field col-12 md:col-4">
+										<div class="input-box">
+											<span class="details">Cession</span>
+											<input type="file" class="input-file" (change)="onFileChange($event)">
+										</div>
+									</div>
+								</div>
+								<!-- Submit Button -->
+								<div class="button">
+									<p-toast key="tst"></p-toast>
+									<input type="submit" (click)="creer()" value="Créer">
+								</div>
+								<!-- Error Messages -->
+                                
+							</form>	
+						</div>
+					</p-panel>
 				</div>
-			</form>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>

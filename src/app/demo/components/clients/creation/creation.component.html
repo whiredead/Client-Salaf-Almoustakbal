@@ -1,204 +1,306 @@
-<div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <form [formGroup]="creationForm">
-                <div class="user-details">
+<div class="grid ">
+    <form [formGroup]="creationForm">
+        <div class="panel-shadow">        
+            <p-panel [toggleable]="false"  >
+
+                <ng-template pTemplate="header">
+
+                    <div class="flex align-items-center gap-2" *ngIf="this.codeClient">
+                        <span class="font-bold text-900">
+                            Modifier Client
+                        </span>
+                    </div>
+                    <div class="flex align-items-center gap-2" *ngIf="!this.codeClient">
+                        <span class="font-bold text-900">
+                            Creation Client
+                        </span>
+                    </div>
+
+                </ng-template>
+
+
+                <div class="col-12">
                     <div class="p-fluid p-formgrid grid">
-                        <!-- Code Client -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Code client</span>
-                                <input pInputText type="text" placeholder="Entrer le nom" formControlName="codeClient" required
-                                    [class.is-invalid]="submitted && creationForm.get('codeClient')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('codeClient')?.hasError('required')">
-                                    Le champ Code Client est obligatoire
-                                </span>
-                                
+                        <div class="user-details">
+                            
+                            <!-- Code Client -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Code client</span>
+                                    <input type="text" pInputText placeholder="Entrer le Code client" *ngIf="!this.codeClient" formControlName="codeClient" required >
+                                    <input  id="disabled-input" type="text" pInputText *ngIf="this.codeClient" [disabled]="true" placeholder={{this.codeClient}} />
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('codeClient')?.hasError('required')">
+                                        Le champ Code Client est obligatoire
+                                    </span>
+                                    
+                                </div>
+                            </div>
+
+                            
+                            <!-- Nom -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Nom</span>
+                                    <input pInputText type="text" placeholder="Entrer le nom" formControlName="nom" required
+                                        [class.is-invalid]="submitted && creationForm.get('nom')?.errors">
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('nom')?.hasError('required')">
+                                        Le champ nom est obligatoire
+                                    </span>
+                                    <span class="text-danger" *ngIf="submitted && 
+                                        (creationForm.get('nom')?.hasError('minlength') || 
+                                        creationForm.get('nom')?.hasError('maxlength'))">
+                                        Le champ nom doit comporter au moins 6 caractères et au maximum 15 caractères.
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Prénom -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Prénom</span>
+                                    <input type="text" placeholder="Entrer le prénom" formControlName="prenom" required
+                                        [class.is-invalid]="submitted && creationForm.get('prenom')?.errors">
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('prenom')?.hasError('required')">
+                                        Le champ prénom est obligatoire
+                                    </span>
+                                    <span class="text-danger" *ngIf="submitted && 
+                                        (creationForm.get('prenom')?.hasError('minlength') || 
+                                        creationForm.get('prenom')?.hasError('maxlength'))">
+                                        Le champ prénom doit comporter au moins 6 caractères et au maximum 15 caractères.
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Date de relation -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Date de relation</span>
+                                    <input type="date" placeholder="Entrer la date de naissance" formControlName="dateRelation" required>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('dateRelation')?.hasError('required')">
+                                        Le champ Date de relation est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Date de naissance -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Date de naissance</span>
+                                    <input type="date" placeholder="Entrer la date de naissance" formControlName="dateNaissance" required>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('dateNaissance')?.hasError('required')">
+                                        Le champ Date de naissance est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Lieu de naissance -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Lieu de naissance</span>
+                                    <input type="text" placeholder="Entrer le Lieu de naissance" formControlName="lieuNaissance">
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('lieuNaissance')?.hasError('required')">
+                                        Le champ Lieu de naissance est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- civilité -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">civilité</span>
+                                    <p-dropdown [options]="civiliteBox" formControlName="civilite" placeholder="Chosir civilité" [showClear]="true"></p-dropdown>
+                                    
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('civilite')?.hasError('required')">
+                                        Le champ civilite est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Situation familiale -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Situation familiale</span>
+                                    <p-dropdown [options]="sitFamilialeBox" formControlName="sitFamiliale" placeholder="Chosir Situation familiale" [showClear]="true" ></p-dropdown>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('sitFamiliale')?.hasError('required')">
+                                        Le champ Situation familiale est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Nombre enfants -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Nombre enfants</span>
+                                    <p-inputNumber mode="decimal" [showButtons]="true" [min]="0" [max]="100" formControlName="nombreEnfants" placeholder="Entrer Nombre d'enfants ">
+                                    </p-inputNumber>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('nombreEnfants')?.hasError('required')">
+                                        Le champ Nombre enfants est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- CIN -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">CIN</span>
+                                    <input type="text" placeholder="Entrer le CIN" formControlName="cin" required>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('cin')?.hasError('required')">
+                                        Le champ CIN est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Date de delivrance -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Date de delivrance</span>
+                                    <input type="date" placeholder="Entrer la date de naissance" formControlName="dateDelivrance" required
+                                        >
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('dateDelivrance')?.hasError('required')">
+                                        Le champ Date de delivrance est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Code Imputation -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Code Imputation</span>
+                                    <input pInputText type="text" placeholder="Entrer le code Imputation" formControlName="codeImputation" required>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('codeImputation')?.hasError('required')">
+                                        Le champ Code Imputation est obligatoire
+                                    </span>
+                                    
+                                </div>
+                            </div>
+                            <!-- Num Tel -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Num tel</span>
+                                    <input type="tel" placeholder="Entrer le  Numero de telephone" formControlName="telephone" required>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('telephone')?.hasError('required')">
+                                        Le champ Numero de telephone est obligatoire
+                                    </span>
+                                    <span class="text-danger" *ngIf="submitted &&  creationForm.get('telephone')?.hasError('pattern')">
+                                        le champ telephone doit respecter le forme
+                                    </span>
+                                    
+                                </div>
+                            </div>
+                            <!-- Ville -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Ville</span>
+                                    <p-dropdown 
+                                        [options]="villeBox1"
+                                        optionLabel="label" 
+                                        [filter]="true" 
+                                        filterBy="label" 
+                                        formControlName="ville" 
+                                        [editable]="true"  
+                                        placeholder="Chosir une ville" 
+                                        [showClear]="true"
+                                        required>
+                                    </p-dropdown>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('ville')?.hasError('required')">
+                                        Le champ ville est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Code Postal -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Code postal</span>
+                                    <input type="text" placeholder="Entrer le code postal" formControlName="codePostal" required>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('codePostal')?.hasError('required')">
+                                    Le champ code postal est obligatoire
+                                    </span>                            
+                                </div>
+                            </div>
+                            <!-- Adresse -->
+                            <div class="field col-12 md:col-6">
+                                <div class="input-box">
+                                    <span class="details">Adresse</span>
+                                    <textarea rows="2" variant="filled" [autoResize]="true" cols="6" placeholder="Entrer l'adresse" formControlName="adresse" required pInputTextarea></textarea>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('adresse')?.hasError('required')">
+                                        Le champ adresse est obligatoire
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Statut d'occupation logement -->
+                            <div class="field col-12 md:col-6">
+                                <div class="input-box">
+                                    <span class="details">Statut d'occupation logement</span>
+                                    <p-dropdown [options]="statusLogBox" formControlName="statutOccupationLogement" placeholder="Chosir une option" [showClear]="true" required></p-dropdown>
+                                    <span class="text-danger" *ngIf="submitted && creationForm.get('statutOccupationLogement')?.hasError('required')">
+                                        Le champ Statut d'occupation logement est obligatoire
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <!-- Nom -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Nom</span>
-                                <input pInputText type="text" placeholder="Entrer le nom" formControlName="nom" required
-                                    [class.is-invalid]="submitted && creationForm.get('nom')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('nom')?.hasError('required')">
-                                    Le champ nom est obligatoire
-                                </span>
-                                <span class="text-danger" *ngIf="submitted && 
-                                    (creationForm.get('nom')?.hasError('minlength') || 
-                                    creationForm.get('nom')?.hasError('maxlength'))">
-                                    Le champ nom doit comporter au moins 6 caractères et au maximum 15 caractères.
-                                </span>
+                    </div>         
+                </div>
+            </p-panel>
+        </div>
+        <div class="mt-2 panel-shadow">
+            <p-panel header="Info Personne Conventionnée" [toggleable]="true" collapsed="false">
+                <div class="col-12">
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="user-details">
+                            <!--Net Mensuel-->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Net Mensuel</span>
+                                    <p-inputNumber mode="currency" currency="MAD" >
+                                    </p-inputNumber>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Prénom -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Prénom</span>
-                                <input type="text" placeholder="Entrer le prénom" formControlName="prenom" required
-                                    [class.is-invalid]="submitted && creationForm.get('prenom')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('prenom')?.hasError('required')">
-                                    Le champ prénom est obligatoire
-                                </span>
-                                <span class="text-danger" *ngIf="submitted && 
-                                    (creationForm.get('prenom')?.hasError('minlength') || 
-                                    creationForm.get('prenom')?.hasError('maxlength'))">
-                                    Le champ prénom doit comporter au moins 6 caractères et au maximum 15 caractères.
-                                </span>
+                            <!--Fonction-->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Fonction</span>
+                                    <p-dropdown [options]=""></p-dropdown>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Date de relation -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Date de relation</span>
-                                <input type="date" placeholder="Entrer la date de naissance" formControlName="dateRelation" required
-                                    [class.is-invalid]="submitted && creationForm.get('dateRelation')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('dateRelation')?.hasError('required')">
-                                    Le champ Date de relation est obligatoire
-                                </span>
+                            <!--Date embauche-->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Date embauche</span>
+                                    <input type="date" placeholder="Entrer la date d'embauche" >
+                                </div>
                             </div>
-                        </div>
-                        <!-- Date de naissance -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Date de naissance</span>
-                                <input type="date" placeholder="Entrer la date de naissance" formControlName="dateNaissance" required
-                                    [class.is-invalid]="submitted && creationForm.get('dateNaissance')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('dateNaissance')?.hasError('required')">
-                                    Le champ Date de naissance est obligatoire
-                                </span>
+                            <!-- Echelle -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Echelle</span>
+                                    <p-dropdown [options]=""></p-dropdown>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Lieu de naissance -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Lieu de naissance</span>
-                                <input type="text" placeholder="Entrer le Lieu de naissance" formControlName="lieuNaissance" required
-                                    [class.is-invalid]="submitted && creationForm.get('lieuNaissance')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('lieuNaissance')?.hasError('required')">
-                                    Le champ Lieu de naissance est obligatoire
-                                </span>
+                            <!-- Echellon -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Echellon</span>
+                                    <p-dropdown [options]=""></p-dropdown>
+                                </div>
                             </div>
-                        </div>
-                        <!-- civilité -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">civilité</span>
-                                <p-dropdown [options]="civiliteBox" formControlName="civilite" placeholder="Chosir civilité" [showClear]="true"></p-dropdown>
-                            </div>
-                        </div>
-                        <!-- Situation familiale -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Situation familiale</span>
-                                <p-dropdown [options]="sitFamilialeBox" formControlName="sitFamiliale" placeholder="Chosir Situation familiale" [showClear]="true"></p-dropdown>
-                            </div>
-                        </div>
-                        <!-- Nombre enfants -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Nombre enfants</span>
-                                <p-inputNumber mode="decimal" [showButtons]="true" [min]="0" [max]="100" formControlName="nombreEnfants" placeholder="Entrer Nombre d'enfants ">
-                                </p-inputNumber>
-                            </div>
-                        </div>
-                        <!-- CIN -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">CIN</span>
-                                <input type="text" placeholder="Entrer le CIN" formControlName="cin" required
-                                    [class.is-invalid]="submitted && creationForm.get('cin')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('cin')?.hasError('required')">
-                                    Le champ CIN est obligatoire
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Date de delivrance -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Date de delivrance</span>
-                                <input type="date" placeholder="Entrer la date de naissance" formControlName="dateDelivrance" required
-                                    [class.is-invalid]="submitted && creationForm.get('dateDelivrance')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('dateDelivrance')?.hasError('required')">
-                                    Le champ Date de delivrance est obligatoire
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Code Imputation -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Code Imputation</span>
-                                <input pInputText type="text" placeholder="Entrer le code Imputation" formControlName="codeImputation" required
-                                    [class.is-invalid]="submitted && creationForm.get('codeImputation')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('codeImputation')?.hasError('required')">
-                                    Le champ Code Imputation est obligatoire
-                                </span>
-                                
-                            </div>
-                        </div>
-                        <!-- Num Tel -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Num tel</span>
-                                <input pInputText type="text" placeholder="Entrer le  Numero de telephone" formControlName="telephone" required
-                                    [class.is-invalid]="submitted && creationForm.get('telephone')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('telephone')?.hasError('required')">
-                                    Le champ Numero de telephone est obligatoire
-                                </span>
-                                
-                            </div>
-                        </div>
-                        <!-- Ville -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Ville</span>
-                                <p-dropdown [options]="sitFamilialeBox" formControlName="ville" placeholder="Chosir une ville" [showClear]="true"></p-dropdown>
-                            </div>
-                        </div>
-                        <!-- Code Postal -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Code postal</span>
-                                <input type="text" placeholder="Entrer le code postal" formControlName="codePostal" required
-                                [class.is-invalid]="submitted && creationForm.get('codePostal')?.errors">
-                                <span class="text-danger" *ngIf="submitted && creationForm.get('codePostal')?.hasError('required')">
-                                Le champ code postal est obligatoire
-                                </span>                            
-                            </div>
-                        </div>
-                        <!-- Adresse -->
-                        <div class="field col-12 md:col-6">
-                            <div class="input-box">
-                                <span class="details">Adresse</span>
-                                <textarea rows="2" variant="filled" [autoResize]="true" cols="6" placeholder="Entrer l'adresse" formControlName="adresse" pInputTextarea></textarea>
-                            </div>
-                        </div>
-                        <!-- Statut d'occupation logement -->
-                        <div class="field col-12 md:col-6">
-                            <div class="input-box">
-                                <span class="details">Statut d'occupation logement</span>
-                                <p-dropdown [options]="sitFamilialeBox" formControlName="statutOccupationLogement" placeholder="Chosir une option" [showClear]="true"></p-dropdown>
+    
+                            <!-- Grille salaire -->
+                            <div class="field col-12 md:col-4">
+                                <div class="input-box">
+                                    <span class="details">Grille salaire</span>
+                                    <p-inputNumber> </p-inputNumber>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Submit Button -->
-                <div class="button">
-                    <input type="submit" (click)="creer()" value="Créer">
-                </div>
-                
-                <!-- Error Messages -->
-                <ul>
-                    <li *ngIf="errorMessages.length > 0">
-                        <span class="alert alert-danger">{{ errorMessages }}</span>
-                    </li>
-                    <li *ngIf="creationForm.errors?.['passwordmatcherror']">
-                        <span class="alert alert-danger">Les mots de passe ne correspondent pas</span>
-                    </li>
-                </ul>
-            </form>
+            </p-panel>
         </div>
-    </div>
+
+        <!-- Submit Button -->
+        <div class="button">
+            <p-toast key="tst"></p-toast>
+            <div>
+                <p-messages [value]="msgs"></p-messages>
+            </div>
+            <input type="submit" (click)="creer1()" *ngIf="!this.codeClient" [disabled]="this.creationForm.invalid" value="Enregister">
+            <input type="submit" (click)="reset()" *ngIf="!this.codeClient" value="Nouveau"  class="ml-2">
+            <input type="submit" (click)="update()" *ngIf="this.codeClient" value="Modifier">
+            <input type="submit" (click)="delete()" *ngIf="this.codeClient" value="Supprimer" class="ml-2">
+
+        </div>
+
+    </form>
+
+    
 </div>

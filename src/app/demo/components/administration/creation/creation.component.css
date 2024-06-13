@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins',sans-serif;
-  }
+}
   body{
     height: 100vh;
     display: flex;
@@ -98,31 +98,38 @@
      display: none;
    }
    form .button{
-     height: 45px;
-     margin: 35px 0
-   }
-   form .button {
     display: flex;
-    justify-content: center;
-    align-items: center; /* Ensure the container takes the full height of its parent */
+    justify-content: flex-end;
+    margin-left:10%;
+    height: 45px;
+    margin: 35px 0;
+
+    
+
   }
-   form .button input{
-     height: 100%;
-     width: 70%;
-     border-radius: 5px;
-     border: none;
-     color: #fff;
-     font-size: 18px;
-     font-weight: 500;
-     letter-spacing: 1px;
-     cursor: pointer;
-     transition: all 0.3s ease;
-     background: linear-gradient(135deg, #49b513, #71b350);
-   }
+  form .button input{
+    height: 100%;
+    width: 10%;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #49b513, #71b350);
+  }
    form .button input:hover{
     /* transform: scale(0.99); */
     background: linear-gradient(-135deg, #ba6a5f, #af2311);
     }
+    .panel-shadow {
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      border-radius: 10px;
+    }
+  
+  
    @media(max-width: 584px){
    .grid{
     max-width: 100%;

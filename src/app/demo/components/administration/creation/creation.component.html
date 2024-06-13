@@ -1,161 +1,170 @@
 <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <form [formGroup]="inscriptionForm">
-                <div class="user-details">
-                    <div class="p-fluid p-formgrid grid">
-                        <!-- Nom -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Nom</span>
-                                <input pInputText type="text" placeholder="Entrer le nom" formControlName="nom" required
-                                    [class.is-invalid]="submitted && inscriptionForm.get('nom')?.errors">
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('nom')?.hasError('required')">
-                                    Le champ nom est obligatoire
-                                </span>
-                                <span class="text-danger" *ngIf="submitted && 
-                                    (inscriptionForm.get('nom')?.hasError('minlength') || 
-                                    inscriptionForm.get('nom')?.hasError('maxlength'))">
-                                    Le champ nom doit comporter au moins 6 caractères et au maximum 15 caractères.
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Prénom -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Prénom</span>
-                                <input type="text" placeholder="Entrer le prénom" formControlName="prenom" required
-                                    [class.is-invalid]="submitted && inscriptionForm.get('prenom')?.errors">
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('prenom')?.hasError('required')">
-                                    Le champ prénom est obligatoire
-                                </span>
-                                <span class="text-danger" *ngIf="submitted && 
-                                    (inscriptionForm.get('prenom')?.hasError('minlength') || 
-                                    inscriptionForm.get('prenom')?.hasError('maxlength'))">
-                                    Le champ prénom doit comporter au moins 6 caractères et au maximum 15 caractères.
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Date de naissance -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Date de naissance</span>
-                                <input type="date" placeholder="Entrer la date de naissance" formControlName="DateNaissance" required
-                                    [class.is-invalid]="submitted && inscriptionForm.get('DateNaissance')?.errors">
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('DateNaissance')?.hasError('required')">
-                                    Le champ Date de naissance est obligatoire
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Email -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Email</span>
-                                <input type="text" placeholder="Entrer l'email" formControlName="email" required
-                                    [class.is-invalid]="submitted && inscriptionForm.get('email')?.errors">
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('email')?.hasError('required')">
-                                    Le champ email est obligatoire
-                                </span>
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('email')?.hasError('pattern')">
-                                    Le champ email est invalide
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Mot de passe -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Mot de passe</span>
-                                <input type="password" placeholder="Entrer le mot de passe" formControlName="password" required
-                                    [class.is-invalid]="submitted && inscriptionForm.get('password')?.errors">
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('password')?.hasError('required')">
-                                    Le champ mot de passe est obligatoire
-                                </span>
-                                <span class="text-danger" *ngIf="submitted && 
-                                    (inscriptionForm.get('password')?.hasError('minlength') || 
-                                    inscriptionForm.get('password')?.hasError('maxlength'))">
-                                    Le champ mot de passe doit comporter au moins 6 caractères et au maximum 15 caractères.
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Confirmer le mot de passe -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Confirmer le mot de passe</span>
-                                <input type="password" placeholder="Confirmer le mot de passe" formControlName="passwordConf" required
-                                    [class.is-invalid]="submitted && inscriptionForm.get('passwordConf')?.errors">
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('passwordConf')?.hasError('required')">
-                                    Le champ Confirmer le mot de passe est obligatoire
-                                </span>
-                            </div>
-                        </div>
-                        <!-- CIN -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">CIN</span>
-                                <input type="text" placeholder="Entrer le CIN" formControlName="cin" required
-                                    [class.is-invalid]="submitted && inscriptionForm.get('cin')?.errors">
-                                <span class="text-danger" *ngIf="submitted && inscriptionForm.get('cin')?.hasError('required')">
-                                    Le champ CIN est obligatoire
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Profession -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Profession</span>
-                                <input type="text" placeholder="Entrer la profession" formControlName="profession">
-                            </div>
-                        </div>
-                        <!-- Adresse -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Adresse</span>
-                                <input type="text" placeholder="Entrer l'adresse" formControlName="adresse">
-                            </div>
-                        </div>
-                        <!-- Image du profil -->
-                        <div class="field col-12 md:col-4">
-                            <div class="input-box">
-                                <span class="details">Image du profil</span>
-                                <input type="file" class="input-file" (change)="onFileChange($event)">
-                            </div>
-                        </div>
-                        <!-- Sexe -->
-                        <div class="field col-12 md:col-6">
-                            <div class="gender-details">
-                                <span class="gender-title">Sexe</span>
-                                <input type="radio" id="dot-1" formControlName="genre" value="1">
-                                <input type="radio" id="dot-2" formControlName="genre" value="0">
-                                <div class="category">
-                                    <label for="dot-1">
-                                        <span class="dot one"></span>
-                                        <span class="gender">Homme</span>
-                                    </label>
-                                    <label for="dot-2">
-                                        <span class="dot two"></span>
-                                        <span class="gender">Femme</span>
-                                    </label>
+    <div class="flex flex-column md:flex-row gap-5">
+        <div class="flex-auto">
+            <div class="col-12 panel-shadow">
+                <div class="card">
+                    <p-panel header="Creation Utilisateur" [toggleable]="false">
+                        <div class="p-fluid p-formgrid grid">
+                            <form [formGroup]="inscriptionForm">
+                                <div class="user-details">
+                                    <!-- Nom -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Nom</span>
+                                            <input pInputText type="text" placeholder="Entrer le nom" formControlName="nom" required
+                                                [class.is-invalid]="submitted && inscriptionForm.get('nom')?.errors">
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('nom')?.hasError('required')">
+                                                Le champ nom est obligatoire
+                                            </span>
+                                            <span class="text-danger" *ngIf="submitted && 
+                                                (inscriptionForm.get('nom')?.hasError('minlength') || 
+                                                inscriptionForm.get('nom')?.hasError('maxlength'))">
+                                                Le champ nom doit comporter au moins 6 caractères et au maximum 15 caractères.
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- Prénom -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Prénom</span>
+                                            <input type="text" placeholder="Entrer le prénom" formControlName="prenom" required
+                                                [class.is-invalid]="submitted && inscriptionForm.get('prenom')?.errors">
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('prenom')?.hasError('required')">
+                                                Le champ prénom est obligatoire
+                                            </span>
+                                            <span class="text-danger" *ngIf="submitted && 
+                                                (inscriptionForm.get('prenom')?.hasError('minlength') || 
+                                                inscriptionForm.get('prenom')?.hasError('maxlength'))">
+                                                Le champ prénom doit comporter au moins 6 caractères et au maximum 15 caractères.
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- Date de naissance -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Date de naissance</span>
+                                            <input type="date" placeholder="Entrer la date de naissance" formControlName="DateNaissance"
+                                                [class.is-invalid]="submitted && inscriptionForm.get('DateNaissance')?.errors">
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('DateNaissance')?.hasError('required')">
+                                                Le champ Date de naissance est obligatoire
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Email</span>
+                                            <input type="text" placeholder="Entrer l'email" formControlName="email" required
+                                                [class.is-invalid]="submitted && inscriptionForm.get('email')?.errors">
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('email')?.hasError('required')">
+                                                Le champ email est obligatoire
+                                            </span>
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('email')?.hasError('pattern')">
+                                                Le champ email est invalide
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- Mot de passe -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Mot de passe</span>
+                                            <input type="password" placeholder="Entrer le mot de passe" formControlName="password" required
+                                                [class.is-invalid]="submitted && inscriptionForm.get('password')?.errors">
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('password')?.hasError('required')">
+                                                Le champ mot de passe est obligatoire
+                                            </span>
+                                            <span class="text-danger" *ngIf="submitted && 
+                                                (inscriptionForm.get('password')?.hasError('minlength') || 
+                                                inscriptionForm.get('password')?.hasError('maxlength'))">
+                                                Le champ mot de passe doit comporter au moins 6 caractères et au maximum 15 caractères.
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- Confirmer le mot de passe -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Confirmer le mot de passe</span>
+                                            <input type="password" placeholder="Confirmer le mot de passe" formControlName="passwordConf" required
+                                                [class.is-invalid]="submitted && inscriptionForm.get('passwordConf')?.errors">
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('passwordConf')?.hasError('required')">
+                                                Le champ Confirmer le mot de passe est obligatoire
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- CIN -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">CIN</span>
+                                            <input type="text" placeholder="Entrer le CIN" formControlName="cin" required
+                                                [class.is-invalid]="submitted && inscriptionForm.get('cin')?.errors">
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('cin')?.hasError('required')">
+                                                Le champ CIN est obligatoire
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- Profession -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Profession</span>
+                                            <input type="text" placeholder="Entrer la profession" formControlName="profession">
+                                        </div>
+                                    </div>
+                                    <!-- Adresse -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Adresse</span>
+                                            <input type="text" placeholder="Entrer l'adresse" formControlName="adresse">
+                                        </div>
+                                    </div>
+                                    <!-- Image du profil -->
+                                    <div class="field col-12 md:col-4">
+                                        <div class="input-box">
+                                            <span class="details">Image du profil</span>
+                                            <input type="file" class="input-file" (change)="onFileChange($event)">
+                                        </div>
+                                    </div>
+                                    <!-- Sexe -->
+                                    <div class="field col-12 md:col-6">
+                                        <div class="gender-details">
+                                            <span class="gender-title">Sexe</span>
+                                            <input type="radio" id="dot-1" formControlName="genre" value="1">
+                                            <input type="radio" id="dot-2" formControlName="genre" value="0">
+                                            <div class="category">
+                                                <label for="dot-1">
+                                                    <span class="dot one"></span>
+                                                    <span class="gender">Homme</span>
+                                                </label>
+                                                <label for="dot-2" class="ml-2">
+                                                    <span class="dot two" ></span>
+                                                    <span class="gender">Femme</span>
+                                                </label>
+                                            </div>
+                                            <span class="text-danger" *ngIf="submitted && inscriptionForm.get('genre')?.hasError('required')">
+                                                Le champ Sexe est obligatoire
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <!-- Submit Button -->
+                                <div class="button">
+                                    <p-toast key="tst"></p-toast>
+                                    <input type="submit" (click)="inscrire()" value="Créer">
+                                    <input type="submit" (click)="reset()" value="Nouveau" class="ml-2">
+
+                                </div>
+
+                                
+                                <!-- Error Messages -->
+                                <ul class="list-none ml-3 mb-3">
+                                    <li *ngIf="inscriptionForm.errors?.['passwordmatcherror']">
+                                        <span class="alert alert-danger">Les mots de passe ne correspondent pas</span>
+                                    </li>
+                                </ul>
+                            </form>
                         </div>
-                    </div>
+                    </p-panel>
                 </div>
-
-                <!-- Submit Button -->
-                <div class="button">
-                    <input type="submit" (click)="inscrire()" value="Créer">
-                </div>
-
-                <!-- Error Messages -->
-                <ul>
-                    <li *ngIf="errorMessages.length > 0">
-                        <span class="alert alert-danger">{{ errorMessages }}</span>
-                    </li>
-                    <li *ngIf="inscriptionForm.errors?.['passwordmatcherror']">
-                        <span class="alert alert-danger">Les mots de passe ne correspondent pas</span>
-                    </li>
-                </ul>
-            </form>
+            </div>
         </div>
     </div>
 </div>
