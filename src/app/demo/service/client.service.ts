@@ -27,6 +27,9 @@ export class ClientService{
     getAllVilles(): Observable<any>{
         return this.http.get<any>(`${environment.appUrl}app/getAllVilles`)
     }
+    getAllStatutOccupation(): Observable<any>{
+        return this.http.get<any>(`${environment.appUrl}app/getAllStatutOccupation`)
+    }
 
     getClientBycode(codeClient:string): Observable<any>{
         return this.http.get<any>(`${environment.appUrl}app/getClientBycode/${codeClient}`);
@@ -34,6 +37,10 @@ export class ClientService{
 
     update(value: any): Observable<any> {
         return this.http.post<any>(`${environment.appUrl}app/upateClient`,value)
+    }
+
+    searchByLabel(label:string):Observable<any>{
+        return this.http.get<any>(`${environment.appUrl}app/getClientByLabel/${label}`)
     }
 
 }

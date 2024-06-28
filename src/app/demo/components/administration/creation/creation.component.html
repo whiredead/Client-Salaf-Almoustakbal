@@ -3,7 +3,21 @@
         <div class="flex-auto">
             <div class="col-12 panel-shadow">
                 <div class="card">
-                    <p-panel header="Creation Utilisateur" [toggleable]="false">
+                    <p-panel [toggleable]="false">
+                        <ng-template pTemplate="header">
+
+                            <div class="flex align-items-center gap-2" *ngIf="utilisateur">
+                                <span class="font-bold text-900">
+                                    Modifier utilisateur
+                                </span>
+                            </div>
+                            <div class="flex align-items-center gap-2" *ngIf="!utilisateur">
+                                <span class="font-bold text-900">
+                                    Creation utilisateur
+                                </span>
+                            </div>
+        
+                        </ng-template>
                         <div class="p-fluid p-formgrid grid">
                             <form [formGroup]="inscriptionForm">
                                 <div class="user-details">
@@ -120,7 +134,20 @@
                                     <div class="field col-12 md:col-4">
                                         <div class="input-box">
                                             <span class="details">Image du profil</span>
-                                            <input type="file" class="input-file" (change)="onFileChange($event)">
+                                            <div class="card">
+                                                <div class="file-input-container" *ngIf="!utilisateur">
+                                                  <p-avatar styleClass="mr-1" [image]="imagePreview" *ngIf="imagePreview" size="xlarge" shape="circle" ></p-avatar>
+                                                  <input type="file" class="input-file" *ngIf="!imagePreview" (change)="onFileChange($event)">
+                                                  <span *ngIf="filename"  class=" text-900 font-bold text-l" >{{filename}}</span>
+                                                  <button pButton class="custom-button" pRipple icon="pi pi-times" *ngIf="imagePreview"  (click)="clearImage()" ></button>
+                                                </div>
+                                                <div class="file-input-container" *ngIf="utilisateur">
+                                                    <p-avatar *ngIf="utilisateur.profileContent!=null" [image]="getProfileImageSrc(utilisateur.profileContent)" styleClass="mr-1" size="xlarge" shape="circle" />
+                                                    <span *ngIf="utilisateur.profileContent!=null"  class=" text-900 font-bold text-l" >{{utilisateur.profileContentUrl}}</span>
+                                                    <input type="file" class="input-file" *ngIf="!utilisateur.profileContent" (change)="onFileChange($event)">
+                                                    <button pButton class="custom-button" pRipple icon="pi pi-times" *ngIf="utilisateur.profileContent!=null"  (click)="clearImage()" ></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- Sexe -->
@@ -146,14 +173,15 @@
                                     </div>
                                 </div>
                                 <!-- Submit Button -->
-                                <div class="button">
-                                    <p-toast key="tst"></p-toast>
-                                    <input type="submit" (click)="inscrire()" value="Créer">
-                                    <input type="submit" (click)="reset()" value="Nouveau" class="ml-2">
-
+                                <p-toast key="tst"></p-toast>
+                                <div class="button" *ngIf="!utilisateur">
+                                    <input type="submit" (click)="inscrire()"  [disabled]="!inscriptionForm.valid" [ngClass]="{'invalid-button': !inscriptionForm.valid, 'valid-button': inscriptionForm.valid}" style="background: var(--blue-700);"value="Enregister">
+                                    <input type="submit" (click)="reset()"value="Nouveau"  style="background: linear-gradient(135deg, #49b513, #71b350);"class="ml-2">
                                 </div>
-
-                                
+                                <div class="button-test" *ngIf="utilisateur">
+                                    <input type="submit" (click)="update()"  [disabled]="!inscriptionForm.valid" [ngClass]="{'invalid-button': !inscriptionForm.valid, 'valid-button': inscriptionForm.valid}" value="Modifier" style="background: var(--blue-700);">
+                                    <input type="submit" (click)="delete()"  value="Supprimer" style=" background: var(--red-700)"class="ml-2">        
+                                </div>
                                 <!-- Error Messages -->
                                 <ul class="list-none ml-3 mb-3">
                                     <li *ngIf="inscriptionForm.errors?.['passwordmatcherror']">

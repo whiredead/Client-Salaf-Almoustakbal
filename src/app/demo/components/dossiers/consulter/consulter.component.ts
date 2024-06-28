@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, debounceTime, distinctUntilChanged, lastValueFrom, switchMap } from 'rxjs';
-import { ClientService } from 'src/app/demo/service/client.service';
+import { DossierService } from 'src/app/demo/service/dossier.service';
 
 @Component({
   selector: 'app-consulter',
@@ -8,31 +8,17 @@ import { ClientService } from 'src/app/demo/service/client.service';
   styleUrl: './consulter.component.css'
 })
 export class ConsulterComponent implements OnInit {
-  clients:any | undefined;
+  dossiers:any | undefined;
   searchLabel:string | undefined;
-  clientssearched:any | undefined;
+  dossierssearched:any | undefined;
   private searchTerms = new Subject<string>();
 
-  constructor(private clientService:ClientService){}
+  constructor( public dossierService: DossierService){}
 
   async ngOnInit(): Promise<void> {
 
-    this.clients= await lastValueFrom(this.clientService.getAllClients());
-    console.log('#####'+JSON.stringify(this.clients,null,2))
-  }
-
-  search(event: any) {
-    const query = event.target as HTMLInputElement;
-    let label = query.value
-    console.log('Search query:  ', label);
-    this.clientService.searchByLabel(label).subscribe({
-      next: (responce)=>{
-        console.log("responce "+ JSON.stringify(responce,null,2))
-      },
-      error: (error)=>{
-        console.log("error "+ JSON.stringify(error))
-      }
-    })
+    this.dossiers= await lastValueFrom(this.dossierService.getAllDossiers());
+    console.log('#####'+JSON.stringify(this.dossiers,null,2))
   }
 
   async search1(term: string): Promise<void> {
@@ -42,12 +28,12 @@ export class ConsulterComponent implements OnInit {
       this.searchTerms.pipe(
         debounceTime(3000), // wait for 2000ms (2 seconds) after each keystroke before considering the term
         distinctUntilChanged(), // ignore if next search term is same as previous
-        switchMap((term: string) => this.clientService.searchByLabel(term))
+        switchMap((term: string) => this.dossierService.searchByLabel(term))
       ).subscribe({
         next: (response) => {
           console.log("Response:", response);
-          this.clientssearched=response;
-          this.clients=null
+          this.dossierssearched=response;
+          this.dossiers=null
           // Handle the response here as needed
         },
 
@@ -61,8 +47,8 @@ export class ConsulterComponent implements OnInit {
     }
     if(term==""){
       console.log('####inside if')
-      this.clientssearched=null;
-      this.clients= await lastValueFrom(this.clientService.getAllClients());
+      this.dossierssearched=null;
+      this.dossiers= await lastValueFrom(this.dossierService.getAllDossiers());
     }
   }
 }

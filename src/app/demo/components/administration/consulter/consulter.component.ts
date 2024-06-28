@@ -1,38 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subject, debounceTime, distinctUntilChanged, lastValueFrom, switchMap } from 'rxjs';
-import { ClientService } from 'src/app/demo/service/client.service';
+import { AuthService } from 'src/app/demo/service/auth.service';
 
 @Component({
   selector: 'app-consulter',
   templateUrl: './consulter.component.html',
   styleUrl: './consulter.component.css'
 })
-export class ConsulterComponent implements OnInit {
-  clients:any | undefined;
+export class ConsulterComponent {
+  utilisateurs:any | undefined;
   searchLabel:string | undefined;
-  clientssearched:any | undefined;
   private searchTerms = new Subject<string>();
+  utilisateursearched: any | undefined;
 
-  constructor(private clientService:ClientService){}
+
+  constructor(private authService: AuthService){}
 
   async ngOnInit(): Promise<void> {
 
-    this.clients= await lastValueFrom(this.clientService.getAllClients());
-    console.log('#####'+JSON.stringify(this.clients,null,2))
-  }
+    this.utilisateurs= await lastValueFrom(this.authService.getAllUsers());
 
-  search(event: any) {
-    const query = event.target as HTMLInputElement;
-    let label = query.value
-    console.log('Search query:  ', label);
-    this.clientService.searchByLabel(label).subscribe({
-      next: (responce)=>{
-        console.log("responce "+ JSON.stringify(responce,null,2))
-      },
-      error: (error)=>{
-        console.log("error "+ JSON.stringify(error))
-      }
-    })
+    console.log('#####'+JSON.stringify(this.utilisateurs,null,2))
   }
 
   async search1(term: string): Promise<void> {
@@ -42,12 +30,13 @@ export class ConsulterComponent implements OnInit {
       this.searchTerms.pipe(
         debounceTime(3000), // wait for 2000ms (2 seconds) after each keystroke before considering the term
         distinctUntilChanged(), // ignore if next search term is same as previous
-        switchMap((term: string) => this.clientService.searchByLabel(term))
+        switchMap((term: string) => this.authService.searchByLabel(term))
       ).subscribe({
         next: (response) => {
           console.log("Response:", response);
-          this.clientssearched=response;
-          this.clients=null
+          this.utilisateursearched=response;
+          console.log('#### dd '+ JSON.stringify(this.utilisateursearched[0]['profile']))
+          this.utilisateurs=null
           // Handle the response here as needed
         },
 
@@ -58,11 +47,20 @@ export class ConsulterComponent implements OnInit {
         }
       }
       );
+
+      
+      
     }
     if(term==""){
       console.log('####inside if')
-      this.clientssearched=null;
-      this.clients= await lastValueFrom(this.clientService.getAllClients());
+      this.utilisateursearched=null;
+      this.utilisateurs= await lastValueFrom(this.authService.getAllUsers());
     }
+  }
+
+  getProfileImageSrc(profileContent: string): string {
+    let image= profileContent;
+    console.log('#####image '+image)
+    return image
   }
 }

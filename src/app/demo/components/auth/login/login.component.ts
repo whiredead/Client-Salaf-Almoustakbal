@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit{
     this.submitted = true;
     console.log('clicked');
     this.errorMessages = [];
+
     if (this.loginForm.valid) {
       this.progress=true
       console.log('form valid');
@@ -65,16 +66,17 @@ export class LoginComponent implements OnInit{
             console.log('###### 2 ' + JSON.stringify(response));
             this.router.navigateByUrl(this.returnUrl);
           } else {
+            this.progress=false
             console.log('###### 1 ' + response);
             console.log('###### 2 ' + JSON.stringify(response));
             this.router.navigateByUrl('salaf');
+
           }
         },
         error: (error: any) => {
+          this.progress=false
           console.log(error);
           this.errorMessages = error.error.value.message;
-          this.progress=false
-
         },
         complete:()=>{
           this.progress=false

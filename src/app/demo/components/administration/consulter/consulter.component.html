@@ -1,0 +1,187 @@
+<div class="grid p-fluid">
+    <div class="col-12 panel-shadow">
+        <div class="card">
+
+            <p-panel header="Consulter Utilisateurs" [toggleable]="false">
+                <p-floatLabel class="p-float-label mb-5">
+                    <input pInputText id="username" [(ngModel)]="searchLabel" (input)="search1($event.target.value)" class="custom-mat-input" />
+                    <label for="username" class=" text-900 font-bold text-l">Rechercher</label>
+                </p-floatLabel>
+                
+                <p-panel  [toggleable]="true" >
+
+                    <ng-template pTemplate="header">
+
+                        <div class="flex align-items-center gap-2">
+                            <span class="font-bold">
+                                Utilisateurs
+                            </span>
+                           
+                            <div class="example-button-container">
+				                <button pButton class="custom-button" pRipple icon="pi pi-plus" [routerLink]="'/salaf/administration/créerutilisateur'"></button>
+                            </div>
+                        </div>
+
+                    </ng-template>
+
+                    <p-table #dt1 *ngIf="utilisateurs!=null" [value]="utilisateurs" dataKey="id" [rows]="6" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
+                        <ng-template pTemplate="body" let-utilisateur>
+                            <tr>
+                                <td>
+                    
+                                    <p-accordion class="w-full" expandIcon="pi pi-plus" collapseIcon="pi pi-minus" [multiple]="true" >
+                                        <!--here if ngfor-->
+                                        <div >
+                                            <p-accordionTab [transitionOptions]="'0ms'">
+                                                <ng-template pTemplate="header">
+                                                    <span class="flex align-items-center gap-2 w-full">
+                                                        <p-avatar *ngIf="utilisateur.profileContent" [image]="getProfileImageSrc(utilisateur.profileContent)" styleClass="mr-2" size="xlarge" shape="circle" />
+                                                        <p-avatar styleClass="mr-2" *ngIf="!utilisateur.profileContent" image="assets/layout/images/profil.jpg" size="xlarge" shape="circle" />
+
+                                                        <span>
+                                                            <span class=" text-700 font-bold text-l"> nom: </span> <span class=" text-500 font-bold text-l">{{utilisateur.nom}}</span>
+                                                            <span class=" text-700 font-bold text-l"> prenom:</span> <span class=" text-500 font-bold text-l">{{utilisateur.prenom}}</span>
+                                                        </span>
+                                                        <!--i want to send the client after the click to another component-->
+                                                        <button pButton pRipple class="ml-auto mr-2 custom-button" icon="pi pi-pencil" [routerLink]="['/salaf/administration/créerutilisateur', utilisateur.cin]">
+                                                        </button>
+                                                    </span>
+                                                </ng-template>
+                                                <div class="grid">
+                                                    <div class="col-12">
+                                                        <div class="p-fluid p-formgrid grid">
+                                                            <div class="user-details">
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">date Naissance</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.dateNaissance}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">Email</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.email}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">cin</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.cin}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">Sexe</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" *ngIf="this.utilisateur.genre==1" placeholder="Homme"/>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" *ngIf="this.utilisateur.genre==0" placeholder="Femme"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">adresse</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.adresse}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">profession</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.profession}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </p-accordionTab>
+                                        </div>
+                                    </p-accordion>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+
+                    <p-table #dt1 *ngIf="utilisateursearched!=null" [value]="utilisateursearched" dataKey="id" [rows]="6" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
+                        <ng-template pTemplate="body" let-utilisateur>
+                            <tr>
+                                <td>
+                    
+                                    <p-accordion class="w-full" expandIcon="pi pi-plus" collapseIcon="pi pi-minus" [multiple]="true" >
+                                        <!--here if ngfor-->
+                                        <div >
+                                            <p-accordionTab [transitionOptions]="'0ms'">
+                                                <ng-template pTemplate="header">
+                                                    <span class="flex align-items-center gap-2 w-full">
+                                                        <p-avatar *ngIf="utilisateur.profileContent" [image]="getProfileImageSrc(utilisateur.profileContent)" styleClass="mr-2" size="xlarge" shape="circle" />
+                                                        <p-avatar styleClass="mr-2" *ngIf="!utilisateur.profileContent" image="assets/layout/images/profil.jpg" size="xlarge" shape="circle" />
+                                                        
+
+
+                                                        <span>
+                                                            <span class=" text-700 font-bold text-l"> nom: </span> <span class=" text-500 font-bold text-l">{{utilisateur.nom}}</span>
+                                                            <span class=" text-700 font-bold text-l"> prenom:</span> <span class=" text-500 font-bold text-l">{{utilisateur.prenom}}</span>
+                                                        </span>
+                                                        <!--i want to send the client after the click to another component-->
+                                                        <button pButton pRipple class="ml-auto mr-2 custom-button" icon="pi pi-pencil" [routerLink]="['/salaf/administration/créerutilisateur', utilisateur.cin]">
+                                                        </button>
+                                                    </span>
+                                                </ng-template>
+                                                <div class="grid">
+                                                    <div class="col-12">
+                                                        <div class="p-fluid p-formgrid grid">
+                                                            <div class="user-details">
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">date Naissance</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.dateNaissance}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">Email</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.email}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">cin</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.cin}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">Sexe</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" *ngIf="this.utilisateur.genre==1" placeholder="Homme"/>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" *ngIf="this.utilisateur.genre==0" placeholder="Femme"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">adresse</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.adresse}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field col-12 md:col-4">
+                                                                    <div class="input-box">
+                                                                        <label  class="details">profession</label>
+                                                                        <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.utilisateur.profession}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </p-accordionTab>
+                                        </div>
+                                    </p-accordion>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-panel>
+            </p-panel>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ import { AcceuilComponent } from './demo/components/acceuil/acceuil.component';
                 runGuardsAndResolvers: 'always',
                 canActivate: [AuthorizationGuard],
                 children: [
-                    {path: '', loadChildren: () => import('./demo/components/pages/empty/emptydemo.module').then(m => m.EmptyDemoModule),},
+                    { path: '', loadChildren: () => import('./demo/components/pages/empty/emptydemo.module').then(m => m.EmptyDemoModule),},
                     { path: 'dashboard', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'utilities', loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
@@ -24,8 +24,8 @@ import { AcceuilComponent } from './demo/components/acceuil/acceuil.component';
                     { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
                     { path: 'dossiers', loadChildren: () => import('./demo/components/dossiers/dossiers.module').then(m => m.DossiersModule) },
                     { path:'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule)},
-                    {path:'administration', loadChildren:()=>import('./demo/components/administration/administration.module').then(m => m.AdministrationModule)},
-                    {path:'clients', loadChildren:()=>import('./demo/components/clients/clients.module').then(m => m.ClientsModule)}
+                    { path:'administration', loadChildren:()=>import('./demo/components/administration/administration.module').then(m => m.AdministrationModule)},
+                    { path:'clients', loadChildren:()=>import('./demo/components/clients/clients.module').then(m => m.ClientsModule)}
                 ]
             },
 

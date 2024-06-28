@@ -101,32 +101,63 @@ input[type="file"] {
  form input[type="radio"]{
    display: none;
  }
- form .button{
-   height: 45px;
-   margin: 35px 0
- }
  form .button {
   display: flex;
-  justify-content: center;
-  align-items: center; /* Ensure the container takes the full height of its parent */
+  justify-content: flex-end;
+  margin-left: 10%;
+  height: 45px;
+  margin: 35px 0;
 }
- form .button input{
-   height: 100%;
-   width: 70%;
-   border-radius: 5px;
-   border: none;
-   color: #fff;
-   font-size: 18px;
-   font-weight: 500;
-   letter-spacing: 1px;
-   cursor: pointer;
-   transition: all 0.3s ease;
-   background: linear-gradient(135deg, #49b513, #71b350);
- }
- form .button input:hover{
-  /* transform: scale(0.99); */
+
+form .button input {
+  height: 100%;
+  width: 10%;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+}
+
+form .button .invalid-button input {
+  background-color: grey; /* Style for invalid state */
+  cursor: not-allowed;
+  color: white; /* Make text readable */
+}
+
+.custom-button {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+form .button input:hover:not(:disabled) {
   background: linear-gradient(-135deg, #ba6a5f, #af2311);
-  }
+}
+form .button input:not(:disabled) {
+  background: linear-gradient(-135deg, #ba6a5f, #af2311);
+  background: linear-gradient(135deg, #49b513, #71b350);
+
+}
+
+form .button input:disabled {
+  background-color: grey; /* Style for disabled state */
+  cursor: not-allowed;
+}
  @media(max-width: 584px){
  .grid{
   max-width: 100%;

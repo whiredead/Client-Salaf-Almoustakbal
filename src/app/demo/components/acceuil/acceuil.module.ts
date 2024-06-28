@@ -2,13 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AcceuilRoutingModule } from './acceuil-routing.module';
+import { TableModule } from 'primeng/table';
+import { AcceuilComponent } from './acceuil.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [AcceuilComponent],
   imports: [
     CommonModule,
-    AcceuilRoutingModule
+    AcceuilRoutingModule,
+    TableModule,
+
   ]
 })
 export class AcceuilModule { }

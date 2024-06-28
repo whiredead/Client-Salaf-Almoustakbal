@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
+  
 
   
   private userSource = new ReplaySubject<User | null>(1);// like an Observable has index of 1 value (size=1)
@@ -77,4 +78,19 @@ export class AuthService {
     this.userSource.next(user)//store user inside userSource
   }
 
+  getAllUsers():Observable<any> {
+    return this.http.get<any>(`${environment.appUrl}auth/getAllUsers`)
+  }
+  getUtilisateurByCin(cin:string):Observable<any>{
+    return this.http.get<any>(`${environment.appUrl}auth/getUtilisateurByCin/${cin}`)
+  }
+
+
+  searchByLabel(term: string): Observable<any> {
+    return this.http.get<any>(`${environment.appUrl}auth/searchByLabel/${term}`)
+  }
+
+  updateUser(value: any): Observable<any> {
+    return this.http.post<any>(`${environment.appUrl}auth/updateUser`,value)
+  }
 }

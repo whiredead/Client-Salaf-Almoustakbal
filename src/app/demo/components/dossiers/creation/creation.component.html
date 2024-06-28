@@ -148,8 +148,8 @@
 									<div class="field col-12 md:col-4">
 										<div class="input-box">
 											<span class="details">Differé</span>
-											<input type="text" placeholder="Entrer la differé" formControlName="differé" >
-											<span class="text-danger" *ngIf="submitted && creationForm.get('differé')?.hasError('required')">
+											<input type="text" placeholder="Entrer la differé" formControlName="differe" >
+											<span class="text-danger" *ngIf="submitted && creationForm.get('differe')?.hasError('required')">
 												Le champ Differé est obligatoire
 											</span>
 										</div>
@@ -176,19 +176,37 @@
 									</div>
 									<!-- Cession -->
 									<div class="field col-12 md:col-4">
-										<div class="input-box">
-											<span class="details">Cession</span>
-											<input type="file" class="input-file" (change)="onFileChange($event)">
-										</div>
-									</div>
+                                        <div class="input-box">
+                                            <span class="details">Cession</span>
+                                            <div class="card">
+                                                <div class="file-input-container" *ngIf="!this.dossier || !this.dossier.cessionByte">
+                                                  <input type="file" class="input-file" *ngIf="filename==null" (change)="onFileChange($event)">
+												  <span class=" text-900 font-bold text-l" *ngIf="filename!=null">{{this.filename}}</span>
+                                                    <button pButton class="custom-button" pRipple *ngIf="filename!=null" icon="pi pi-times" (click)="clearfile()" ></button>
+                                                </div>
+                                                <div class="file-input-container" *ngIf="this.dossier && this.dossier.cessionByte">
+                                                    <span class=" text-900 font-bold text-l" >{{this.dossier.cessionPath}}</span>
+                                                    <button pButton class="custom-button" pRipple icon="pi pi-times" (click)="clearfile()" ></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+									
 								</div>
 								<!-- Submit Button -->
-								<div class="button">
-									<p-toast key="tst"></p-toast>
-									<input type="submit" (click)="creer()" value="Créer">
+								<p-toast key="tst"></p-toast>
+						
+								<div class="button" *ngIf="!reference">
+									<input type="submit" (click)="creer()"  [disabled]="!creationForm.valid" [ngClass]="{'invalid-button': !creationForm.valid, 'valid-button': creationForm.valid}" style="background: var(--blue-700);"value="Enregister">
+									<input type="submit" (click)="reset()"value="Nouveau"  style="background: linear-gradient(135deg, #49b513, #71b350);"class="ml-2">
+								</div>
+								<div class="button" *ngIf="reference">
+									<input type="submit" (click)="update()" value="Modifier" style="background: var(--blue-700);">
+									<input type="submit" (click)="delete()" value="Supprimer" style=" background: var(--red-700)"class="ml-2">        
 								</div>
 								<!-- Error Messages -->
                                 
+							
 							</form>	
 						</div>
 					</p-panel>

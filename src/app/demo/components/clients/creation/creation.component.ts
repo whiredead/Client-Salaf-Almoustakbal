@@ -49,7 +49,8 @@ export class CreationComponent implements OnInit {
   async getAllVilles(): Promise<SelectedItem[]> {
     try {
       const data = await lastValueFrom(this.clientSer.getAllVilles());
-      const villes = data.map(d => ({ label: d.name, codeVille: d.id }));
+      const villes = data.map(d => ({ label: d.name }));
+      console.log('###### villes '+ JSON.stringify(villes,null,2))
       return villes;
     } catch (error) {
       console.error('Error fetching clients:', error);
@@ -62,9 +63,16 @@ export class CreationComponent implements OnInit {
       .map(key => ( {label: key} ));
   }
 
-  getStatutOccupationLogement(): SelectedItem[] {
-    return Object.keys(statutOccupationLogement)
-      .map(key => ( { label: statutOccupationLogement[key] } ));
+  async getStatutOccupationLogement(): Promise<SelectedItem[]> {
+      try {
+        const data = await lastValueFrom(this.clientSer.getAllStatutOccupation());
+        const status = data.map(d => ({ label: d.name }));
+        console.log('###### villes '+ JSON.stringify(status,null,2))
+        return status;
+      } catch (error) {
+        console.error('Error fetching clients:', error);
+        return [];
+      }
   }
 
   async getClientToUpdate(){
@@ -112,14 +120,15 @@ export class CreationComponent implements OnInit {
 
     this.villeBox1 = await this.getAllVilles()
 
-    this.statusLogBox=this.getStatutOccupationLogement()
+    this.statusLogBox=await this.getStatutOccupationLogement()
 
 
   }
 
   async initialiseForm(codeClient:string){
+    
     this.client= await lastValueFrom(this.clientService.getClientBycode(codeClient))
-    console.log('##### ' +JSON.stringify(this.client,null,2))
+    console.log('##### client ' +JSON.stringify(this.client,null,2))
     this.creationForm.patchValue({
       nom: this.client['nom'],
       prenom: this.client['prenom'],
@@ -138,6 +147,17 @@ export class CreationComponent implements OnInit {
       codePostal: this.client['codePostal'],
       adresse: this.client['adresse'],
       statutOccupationLogement: { label: this.client['statutOccupationLogement'] },
+    });
+    this.markControlsAsTouchedAndValidate();
+
+  }
+  markControlsAsTouchedAndValidate(): void {
+    Object.keys(this.creationForm.controls).forEach(controlName => {
+      const control = this.creationForm.get(controlName);
+      if (control) {
+        control.markAsTouched();
+        control.updateValueAndValidity();
+      }
     });
   }
 
@@ -319,4 +339,7 @@ export class CreationComponent implements OnInit {
   }
   */
 
+  delete(){
+    console.log('####### client supprimer')
+  }
 }

@@ -1,0 +1,371 @@
+<div class="grid p-fluid">
+    <div class="col-12 panel-shadow">
+        <div class="card">
+
+            <p-panel header="Consulter Clients" [toggleable]="false">
+
+                
+                <p-floatLabel class="p-float-label mb-5">
+                    <input pInputText id="username" [(ngModel)]="searchLabel" (input)="search1($event.target.value)" class="custom-mat-input" />
+                    <label for="username" class=" text-900 font-bold text-l">Rechercher</label>
+                </p-floatLabel>
+                
+                <p-panel  [toggleable]="true" >
+
+                    <ng-template pTemplate="header">
+
+                        <div class="flex align-items-center gap-2">
+                            <span class="font-bold">
+                                Dossiers
+                            </span>
+                           
+                            <div class="example-button-container">
+				                <button pButton class="custom-button" pRipple icon="pi pi-plus" [routerLink]="'/salaf/dossiers/création'"></button>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                    <div *ngIf="dossiers!=null && dossierssearched==null">
+                        <p-table #dt1 [value]="dossiers" dataKey="id" [rows]="5" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
+                            <ng-template pTemplate="body" let-dossier>
+                                <tr>
+                                    <td>
+                                        <p-accordion class="w-full" expandIcon="pi pi-plus" collapseIcon="pi pi-minus" [multiple]="true" >
+                                            <!--here if ngfor-->
+                                            <div >
+                                                <p-accordionTab [transitionOptions]="'0ms'">
+                                                    <ng-template pTemplate="header">
+                                                        <span class="flex align-items-center gap-2 w-full">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 50 50">
+                                                                <path d="M45 8L18.044 8.006c-.279-.101-.855-1.02-1.165-1.514C16.112 5.268 15.317 4 14 4H5C3.346 4 2 5.346 2 7v6h1 44 1v-2C48 9.346 46.654 8 45 8zM48 43V16c0-.552-.448-1-1-1H3c-.552 0-1 .448-1 1v27c0 1.657 1.343 3 3 3h40C46.657 46 48 44.657 48 43z"></path>
+                                                            </svg>
+                                                            
+                                                            <span class=" text-700 font-bold text-l" > reference: </span> <span class=" text-500 font-bold text-l">{{dossier.reference}}</span> 
+                                                            <span class=" text-700 font-bold text-l"> code-client: </span> <span class=" text-500 font-bold text-l">{{dossier.codeClient}}</span>
+                                                            <span class=" text-700 font-bold text-l"> agence:</span> <span class=" text-500 font-bold text-l">{{dossier.agence}}</span>
+                                                            <!--i want to send the client after the click to another component-->
+                                                            <button pButton pRipple class="ml-auto mr-2 custom-button" icon="pi pi-pencil" [routerLink]="['/salaf/dossiers/création', dossier.reference]">
+                                                            </button>
+                                                        </span>
+                                                    </ng-template>
+                                                    <div class="grid">
+                                                        <div class="col-12">
+                                                            <div class="p-fluid p-formgrid grid">
+                                                                
+                                                                <div class="user-details">
+                                                                    <!-- Date Op -->
+                                                                    
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Date Op</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.dateOp}}"/>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Client -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Client</span>
+                                                                            <input type="text" placeholder="{{this.dossier.codeClient}}" [disabled]="true">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--Référence -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Référence</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.reference}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Produit -->
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Produit</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.produit}}">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Agence -->
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Agence</span>
+                                                                            <input type="text"  [disabled]="true" placeholder="{{this.dossier.agence}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Date Premiére Echeance -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Premiére Echeance</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.premiereEcheance}}"/>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Date Derniére Echeance -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Derniére Echeance</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.derniereEcheance}}"/>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Echéance -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Echéance</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.echeance}}"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Credit -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Credit</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.credit}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Périodicite -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Périodicite</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.periodicite}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Durée -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Durée</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.duree}}">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- TEG -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">TEG</span>
+                                                                            <input type="text" [disabled]="true" >
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- TVA -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">TVA</span>
+                                                                            <input type="text" [disabled]="true" >
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <!-- Differé -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Differé</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.differe}}">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Assurance -->
+                                                                    <div  class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                        <span class="details">Assurance</span>
+                                                                        <input type="text" [disabled]="true" placeholder="{{ dossier.assurance }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <!-- Code Comptable -->
+                                                                    <div  class="field col-12 md:col-4" >
+                                                                        <div class="input-box">
+                                                                        <span class="details">Code Comptable</span>
+                                                                        <input type="text" [disabled]="true" placeholder="{{ dossier.codeComptable }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Cession -->
+
+                                                                    <div class="field col-12 md:col-4"  >
+                                                                        <div class="input-box">
+                                                                        <span class="details">Cession</span>
+                                                                        <input type="text" [disabled]="true" placeholder="{{ dossier.cessionPath }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </p-accordionTab>
+                                            </div>
+                                        </p-accordion>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    
+                    <div *ngIf="dossierssearched!=null">
+                        <p-table #dt1 [value]="dossierssearched" dataKey="id" [rows]="5" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll">
+                            <ng-template pTemplate="body" let-dossier>
+                                <tr>
+                                    <td>
+                                        <p-accordion class="w-full" expandIcon="pi pi-plus" collapseIcon="pi pi-minus" [multiple]="true" >
+                                            <!--here if ngfor-->
+                                            <div >
+                                                <p-accordionTab [transitionOptions]="'0ms'">
+                                                    <ng-template pTemplate="header">
+                                                        <span class="flex align-items-center gap-2 w-full">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 50 50">
+                                                                <path d="M45 8L18.044 8.006c-.279-.101-.855-1.02-1.165-1.514C16.112 5.268 15.317 4 14 4H5C3.346 4 2 5.346 2 7v6h1 44 1v-2C48 9.346 46.654 8 45 8zM48 43V16c0-.552-.448-1-1-1H3c-.552 0-1 .448-1 1v27c0 1.657 1.343 3 3 3h40C46.657 46 48 44.657 48 43z"></path>
+                                                            </svg>
+                                                            
+                                                            <span class=" text-700 font-bold text-l" > reference: </span> <span class=" text-500 font-bold text-l">{{dossier.reference}}</span> 
+                                                            <span class=" text-700 font-bold text-l"> code-client: </span> <span class=" text-500 font-bold text-l">{{dossier.codeClient}}</span>
+                                                            <span class=" text-700 font-bold text-l"> agence:</span> <span class=" text-500 font-bold text-l">{{dossier.agence}}</span>
+                                                            <!--i want to send the client after the click to another component-->
+                                                            <button pButton pRipple class="ml-auto mr-2 custom-button" icon="pi pi-pencil" [routerLink]="['/salaf/dossiers/création', dossier.reference]">
+                                                            </button>
+                                                        </span>
+                                                    </ng-template>
+                                                    <div class="grid">
+                                                        <div class="col-12">
+                                                            <div class="p-fluid p-formgrid grid">
+                                                                
+                                                                <div class="user-details">
+                                                                    <!-- Date Op -->
+                                                                    
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Date Op</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.dateOp}}"/>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Client -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Client</span>
+                                                                            <input type="text" placeholder="{{this.dossier.codeClient}}" [disabled]="true">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--Référence -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Référence</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.reference}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Produit -->
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Produit</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.produit}}">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Agence -->
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Agence</span>
+                                                                            <input type="text"  [disabled]="true" placeholder="{{this.dossier.agence}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Date Premiére Echeance -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Premiére Echeance</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.premiereEcheance}}"/>
+
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Date Derniére Echeance -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Derniére Echeance</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.derniereEcheance}}"/>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Echéance -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Echéance</span>
+                                                                            <input id="disabled-input" type="text" pInputText [disabled]="true" placeholder="{{this.dossier.echeance}}"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Credit -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Credit</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.credit}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Périodicite -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Périodicite</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.periodicite}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Durée -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Durée</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.duree}}">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- TEG -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">TEG</span>
+                                                                            <input type="text" [disabled]="true" >
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- TVA -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">TVA</span>
+                                                                            <input type="text" [disabled]="true" >
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <!-- Differé -->
+                                                                    <div class="field col-12 md:col-4">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Differé</span>
+                                                                            <input type="text" [disabled]="true" placeholder="exxaaaa">
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Assurance -->
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <div class="input-box">
+                                                                            <span class="details">Assurance</span>
+                                                                            <input type="text"[disabled]="true"  placeholder="{{this.dossier.assurance}}" >
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Code Comptable -->
+                                                                    <div class="field col-12 md:col-6">
+                                                                        <div class="input-box">
+                                                                            <span class="details" >Code Comptable</span>
+                                                                            <input type="text" [disabled]="true" placeholder="{{this.dossier.codeComptable}}">
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </p-accordionTab>
+                                            </div>
+                                        </p-accordion>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+
+                </p-panel>
+            </p-panel>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+
 <div class="grid ">
     <form [formGroup]="creationForm">
         <div class="panel-shadow">        
@@ -233,7 +234,7 @@
             </p-panel>
         </div>
         <div class="mt-2 panel-shadow">
-            <p-panel header="Info Personne Conventionnée" [toggleable]="true" collapsed="false">
+            <p-panel header="Info Personne Conventionnée" [toggleable]="true" collapsed="true">
                 <div class="col-12">
                     <div class="p-fluid p-formgrid grid">
                         <div class="user-details">
@@ -288,18 +289,17 @@
         </div>
 
         <!-- Submit Button -->
-        <div class="button">
-            <p-toast key="tst"></p-toast>
-            <div>
-                <p-messages [value]="msgs"></p-messages>
-            </div>
-            <input type="submit" (click)="creer1()" *ngIf="!this.codeClient" [disabled]="this.creationForm.invalid" value="Enregister">
-            <input type="submit" (click)="reset()" *ngIf="!this.codeClient" value="Nouveau"  class="ml-2">
-            <input type="submit" (click)="update()" *ngIf="this.codeClient" value="Modifier">
-            <input type="submit" (click)="delete()" *ngIf="this.codeClient" value="Supprimer" class="ml-2">
+        <p-toast key="tst"></p-toast>
+        <p-messages [value]="msgs"></p-messages>
 
+        <div class="button" *ngIf="!codeClient">
+            <input type="submit" (click)="creer1()"  [disabled]="!creationForm.valid" [ngClass]="{'invalid-button': !creationForm.valid, 'valid-button': creationForm.valid}" style="background: var(--blue-700);"value="Enregister">
+            <input type="submit" (click)="reset()"value="Nouveau"  style="background: linear-gradient(135deg, #49b513, #71b350);"class="ml-2">
         </div>
-
+        <div class="button-test" *ngIf="codeClient">
+            <input type="submit" (click)="update()" *ngIf="this.codeClient" value="Modifier" style="background: var(--blue-700);">
+            <input type="submit" (click)="delete()" *ngIf="this.codeClient" value="Supprimer" style=" background: var(--red-700)"class="ml-2">        
+        </div>
     </form>
 
     

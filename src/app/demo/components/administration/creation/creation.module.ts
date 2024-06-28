@@ -8,7 +8,8 @@ import { CreationComponent } from './creation.component';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
-
+import { AvatarModule } from 'primeng/avatar';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [CreationComponent],
@@ -21,6 +22,8 @@ import { ToastModule } from 'primeng/toast';
 		MessageModule,
 		ButtonModule,
 		ToastModule,
+    AvatarModule,
+    FileUploadModule
     
 ],
 })
