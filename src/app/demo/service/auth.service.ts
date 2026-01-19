@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject, map, of } from 'rxjs';
+import { ItemBarService } from 'src/app/layout/service/items.service';
 import { login } from 'src/app/shared/models/login';
 import { User } from 'src/app/shared/models/user';
 import { environment } from 'src/environments/environment';
@@ -10,13 +11,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  
 
   
   private userSource = new ReplaySubject<User | null>(1);// like an Observable has index of 1 value (size=1)
   user$ = this.userSource.asObservable();// $ to say it's an Observable
 
-  constructor(private http: HttpClient, private router : Router) { }
+  constructor(private http: HttpClient, private router : Router,private itemBarService: ItemBarService) { }
 
   refreshUser(jwt : string|null){
     //console.log("##### auth jwt "+jwt)
@@ -54,6 +54,9 @@ export class AuthService {
   logout(){
     //console.log("logout called")
     localStorage.removeItem(environment.userKey);
+    // ✅ IMPORTANT: Vider le cache du menu
+    this.itemBarService.clearCache();
+
     this.userSource.next(null);
     this.router.navigateByUrl('connecter')
   }
@@ -92,5 +95,16 @@ export class AuthService {
 
   updateUser(value: any): Observable<any> {
     return this.http.post<any>(`${environment.appUrl}auth/updateUser`,value)
+  }
+
+  isLoggedIn(): boolean {
+    return this.getUser() !== null;
+  }
+  getUser(): User | null {
+    const userJson = localStorage.getItem(environment.userKey);
+    if (userJson) {
+      return JSON.parse(userJson) as User;
+    }
+    return null;
   }
 }
