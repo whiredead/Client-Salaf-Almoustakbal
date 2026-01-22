@@ -42,7 +42,8 @@ jobs:
     - name: 🔨 Build Frontend Image
       run: |
         IMAGE_TAG=${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        docker build -t $IMAGE_TAG -f frontend/Dockerfile frontend
+        docker build -t $IMAGE_TAG -f Client-Salaf-Almoustakbal/Dockerfile Client-Salaf-Almoustakbal
+
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
     - name: 📤 Push Image
