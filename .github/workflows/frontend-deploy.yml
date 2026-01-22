@@ -34,7 +34,6 @@ jobs:
         client-id: ${{ env.AZURE_CLIENT_ID }}
         tenant-id: ${{ env.AZURE_TENANT_ID }}
         subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
-        auth-type: workload_identity
 
 
     - name: 🐳 Login to ACR
