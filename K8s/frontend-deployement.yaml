@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sfm-frontend
+  namespace: sfm
+  labels:
+    app: sfm-frontend
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sfm-frontend
+  template:
+    metadata:
+      labels:
+        app: sfm-frontend
+    spec:
+      containers:
+      - name: sfm-frontend
+        image: sfmappregistry.azurecr.io/sfmfrontendimage
+        ports:
+        - containerPort: 80
