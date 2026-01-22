@@ -10,7 +10,7 @@ permissions:
   contents: read
 # oidc is required for azure/login action and add federation identity credential Subject to the service principal in azure portal and set it to repo:<OWNER>/<REPO>:ref:refs/heads/main
 env:
-  AZURE_CLIENT_ID: '43407652-d41c-402c-95d3-97711c0557c2'
+  AZURE_CLIENT_ID: '15c341f8-db14-457f-acf9-f5127df5356f'
   AZURE_TENANT_ID: 'd6c5bbe2-0dd0-4148-a86c-ffe8f3e95c29'
   AZURE_SUBSCRIPTION_ID: '4951b3fd-2793-4851-80ff-a11f2814093c'
 
