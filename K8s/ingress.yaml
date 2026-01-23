@@ -16,7 +16,7 @@ spec:
           service:
             name: sfm-backend-service
             port:
-              number: 8080   # ✅ FIXED
+              number: 8080
       - path: /
         pathType: Prefix
         backend:
