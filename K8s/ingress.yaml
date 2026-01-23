@@ -5,23 +5,22 @@ metadata:
   namespace: sfm
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: 20.76.11.164.nip.io   # Replace with your domain
+  - host: 20.76.11.164.nip.io
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: sfm-frontend-service
-            port:
-              number: 80
       - path: /api
         pathType: Prefix
         backend:
           service:
             name: sfm-backend-service
+            port:
+              number: 8080   # ✅ FIXED
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sfm-frontend-service
             port:
               number: 80
