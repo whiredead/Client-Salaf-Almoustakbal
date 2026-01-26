@@ -4,14 +4,30 @@ metadata:
   name: sfm-ingress
   namespace: sfm
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
-  ingressClassName: nginx  # Modern approach instead of annotation
+  ingressClassName: nginx
   rules:
   - host: 20.76.11.164.nip.io
     http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: sfm-backend-service
+            port:
+              number: 8080
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sfm-frontend-service
+            port:
+              number: 80
+  # Also accept traffic without hostname (for direct IP access)
+  - http:
       paths:
       - path: /api
         pathType: Prefix
