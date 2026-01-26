@@ -4,8 +4,11 @@ metadata:
   name: sfm-ingress
   namespace: sfm
   annotations:
-    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
+  ingressClassName: nginx  # Modern approach instead of annotation
   rules:
   - host: 20.76.11.164.nip.io
     http:
