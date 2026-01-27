@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  appUrl: 'https://safm.duckdns.org/api',  // Or your actual domain
+  apiUrl: '/api',  // This will use http://safm.duckdns.org/api
   userKey: 'identityAppUser'
+
 };
