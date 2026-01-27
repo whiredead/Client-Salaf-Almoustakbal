@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  appUrl: 'http://20.76.11.164.nip.io/api',  // Or your actual domain
+  appUrl: 'http://20.76.11.164.nip.io/api/',  // Or your actual domain
   userKey: 'identityAppUser'
 };
 
